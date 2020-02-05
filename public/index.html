@@ -109,11 +109,9 @@
               inpLong = 0;
               document.getElementById("testText").innerHTML=  "didn't work";
             }
-            
-            //const data = { "latitude": 0.0, "longitude": 1.0 };
 
             //response will store a JSON file
-            const response = await fetch(`weather/${inpLat},${inpLong},${inpStart},${inpEnd}`)
+            const response = await fetch(`weather/${inpLat},${inpLong},${inpStart},${inpEnd}`);
             const json = await response.json();
             //console.log(json);
 

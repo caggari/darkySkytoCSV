@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "public",
+    "rewrites": [{
+      "source": "/weather/:info",
+      "function":"app"
+    },
+  {
+    "source": "/timestamp",
+    "function":"app"
+  },
+  {
+    "source": "**",
+    "destination": "/index.html"
+  }]
+  }
+}

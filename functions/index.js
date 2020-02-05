@@ -7,10 +7,10 @@ var fs = require('fs');//file system
 const http = require('http');
 const bodyParser = require("body-parser");//parse json data sent over
 const fetch =require('node-fetch');
-//const functions = require('firebase-functions');
+const functions = require('firebase-functions');
 // The Firebase Admin SDK to access the Firebase Realtime Database.
-//const admin = require('firebase-admin');
-//admin.initializeApp();
+const admin = require('firebase-admin');
+admin.initializeApp();
 
 const app = express();
 const handlebars = require('express-handlebars').create({});
@@ -29,8 +29,6 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.listen(53140, () => console.log('The server is up and running...'));
-
 function getFormattedDate(date) {
     let year = date.getFullYear();
     let month = (1 + date.getMonth()).toString().padStart(2, '0');
@@ -39,17 +37,20 @@ function getFormattedDate(date) {
     return month + '/' + day + '/' + year;
 }
 
-app.get('/weather/:info', async (req, res) => {
+
+app.get('/timestamp', (request, response) => {
+    response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+    response.send(`${Date.now()}`)
+});
+
+app.get('/weather/:info', async (req, res) =>  {
+    response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     const info = req.params.info.split(',');
     const latitude=info[0];
     const longitude=info[1];
     const startDate=new Date(info[2]);
     const endDate=new Date(info[3]);
-    //const api_url = `https://api.darksky.net/forecast/962f9f1ccd5336cd50b31fe2f5394792/${latitude},${longitude}`
-    //const fetch_response = await fetch(api_url);
-    //const json = await fetch_response.json();
-
-    
+    console.log("hell yea");
     var end = new Date(endDate);
     var start = new Date(startDate);
     end.setDate(end.getDate());
@@ -87,12 +88,12 @@ app.get('/weather/:info', async (req, res) => {
         table.push(dayStats);
         lastData=json;
     }
-
-    var csv = ''
     var lastData = {
         "dailyList" : table   
     };//returned as a response
 
     res.json(lastData);
-    //res.sendFile()
+    //res.send('what what')
 });
+
+exports.app = functions.https.onRequest(app);
