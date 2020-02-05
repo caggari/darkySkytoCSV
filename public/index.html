@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DarkSky to CSV</title>>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    </head>
+    
+    <body>
+      <div class="container">
+        <h1>Weather to CSV</h1>
+        <p>
+          How to use:<br>
+          1) Select a start date<br>
+          2) Select an end date<br>
+          3) Select a city<br>
+          4) Submit Request
+        </p>
+        <div id = "startDate">
+            <label for="start">Start date:</label>
+
+            <input type="date" id="start" name="trip-start">
+        </div>
+        <div id = "endDate">
+            <label for="end">End date:</label>
+
+            <input type="date" id="end" name="trip-start">
+        </div>
+        <!--
+        <div>
+            <a href="https://www.latlong.net/convert-address-to-lat-long.html">Get Coordinates here</a>
+        </div>
+      -->
+        <div>
+          <select id = "location">
+            <option value="ohare">O'Hare</option>
+            <option value="midway">Midway</option>
+            <option value="saratoga">Saratoga</option>
+            <option value="tampa">Tampa</option>
+          </select>
+        </div>
+        <div>
+          <p id = "testText">
+            value
+          </p>
+        </div>
+        <div>
+          <button id="submitButton" class="btn btn-primary" onclick="buttonPressed()">Submit</button>
+        </div>
+
+        <script>
+          downloadCSVFromJson = (filename, arrayOfJson) => {
+            // convert JSON to CSV
+            const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+            const header = Object.keys(arrayOfJson[0])
+            let csv = arrayOfJson.map(row => header.map(fieldName => 
+            JSON.stringify(row[fieldName], replacer)).join(','))
+            csv.unshift(header.join(','))
+            csv = csv.join('\r\n')
+
+            // Create link and download
+            var link = document.createElement('a');
+            link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csv));
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          };
+          async function buttonPressed()
+          {
+            var location = document.getElementById("location");
+            var text = document.getElementById("testText");
+            var inpStart = document.getElementById("start").value;
+            var inpEnd = document.getElementById("end").value;
+            var inpLat;
+            var inpLong;
+            if (location.value.localeCompare("ohare") == 0)
+            {
+              inpLat = 41.977226;
+              inpLong = -87.904724;
+              document.getElementById("testText").innerHTML= "OHare";
+            }
+            else if(location.value.localeCompare("midway") == 0)
+            {
+              inpLat = 41.78677589;
+              inpLong =-87.7521884;
+              document.getElementById("testText").innerHTML= "Midway";
+            }
+            else if(location.value.localeCompare("saratoga") == 0)
+            {
+              inpLat = 27.341274;
+              inpLong = -82.528267;
+              document.getElementById("testText").innerHTML= "Saratoga";
+            }
+            else if(location.value.localeCompare("tampa") == 0)
+            {
+              inpLat = 27.964157;
+              inpLong = -82.452606;
+              document.getElementById("testText").innerHTML= "Tampa";
+            }
+            else
+            {
+              inpLat = 0;
+              inpLong = 0;
+              document.getElementById("testText").innerHTML=  "didn't work";
+            }
+            
+            //const data = { "latitude": 0.0, "longitude": 1.0 };
+
+            //response will store a JSON file
+            const response = await fetch(`weather/${inpLat},${inpLong},${inpStart},${inpEnd}`)
+            const json = await response.json();
+            //console.log(json);
+
+            this.downloadCSVFromJson('Weather.csv', json.dailyList);
+          }
+        </script>
+
+        <hr/>
+        <footer class="cs-legend-footer"><a href="https://darksky.net/poweredby/">Powered by DarkSky </a></footer>
+    </body>
+</html>
