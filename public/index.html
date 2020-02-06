@@ -111,9 +111,10 @@
             }
 
             //response will store a JSON file
-            const response = await fetch(`weather/${inpLat},${inpLong},${inpStart},${inpEnd}`);
+            //const response = await fetch(`weather/${inpLat},${inpLong},${inpStart},${inpEnd}`);
+            const response = await fetch(`/weather?latitude=${inpLat}&longitude=${inpLong}&startDate=${inpStart}&endDate=${inpEnd}`);
             const json = await response.json();
-            //console.log(json);
+            console.log(json);
 
             this.downloadCSVFromJson('Weather.csv', json.dailyList);
           }

@@ -43,14 +43,13 @@ app.get('/timestamp', (request, response) => {
     response.send(`${Date.now()}`)
 });
 
-app.get('/weather/:info', async (req, res) =>  {
-    response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-    const info = req.params.info.split(',');
-    const latitude=info[0];
-    const longitude=info[1];
-    const startDate=new Date(info[2]);
-    const endDate=new Date(info[3]);
-    console.log("hell yea");
+app.get('/weather', async(req, res) =>  {
+    //response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+    //const info = req.params.info.split(',');
+    const latitude=req.query.latitude;
+    const longitude=req.query.longitude;
+    const startDate=req.query.startDate;
+    const endDate=req.query.endDate;
     var end = new Date(endDate);
     var start = new Date(startDate);
     end.setDate(end.getDate());
