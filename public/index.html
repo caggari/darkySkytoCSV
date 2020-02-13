@@ -22,7 +22,7 @@
 
       <!-- Initialize Firebase -->
       <script src="/__/firebase/init.js"></script>
-      
+
       <div class="container">
         <h1>Weather to CSV</h1>
         <h1>Welcome to My Awesome App</h1>
@@ -69,8 +69,6 @@
         </div>
 
         <script>
-          // Initialize the FirebaseUI Widget using Firebase.
-          var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
           downloadCSVFromJson = (filename, arrayOfJson) => {
             // convert JSON to CSV
@@ -171,6 +169,10 @@
         };
         // The start method will wait until the DOM is loaded.
           ui.start('#firebaseui-auth-container', uiConfig);
+
+          
+          // Initialize the FirebaseUI Widget using Firebase.
+          var ui = new firebaseui.auth.AuthUI(firebase.auth());
         </script>
 
         <hr/>
