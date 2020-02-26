@@ -44,7 +44,7 @@ app.get('/timestamp', (request, response) => {
 });
 
 app.get('/weather', async(req, res) =>  {
-    response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     //const info = req.params.info.split(',');
     const latitude=req.query.latitude;
     const longitude=req.query.longitude;
