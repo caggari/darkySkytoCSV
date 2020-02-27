@@ -81,6 +81,7 @@ app.get('/weather', async(req, res) =>  {
             "UV Index": daily.uvIndex,
             "Visibility": daily.visibility,
             "Wind Speed": daily.windSpeed,
+            "Wind Gust": daily.windGust,
             "wind Bearing": daily.windBearing
         };
         console.log(dayStats); 
