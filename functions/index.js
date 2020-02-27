@@ -51,15 +51,16 @@ app.get('/weather', async(req, res) =>  {
     const startDate=req.query.startDate;
     const endDate=req.query.endDate;
     var end = new Date(endDate);
+    
     var start = new Date(startDate);
-    end.setDate(end.getDate());
+    end.setDate(end.getDate()+1);
     start.setDate(start.getDate()+1);
 
     var table = [];
 
     for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
         let unixTime=(Date.parse(d)/1000).toFixed(0);
-        let api_url = `https://api.darksky.net/forecast/962f9f1ccd5336cd50b31fe2f5394792/${latitude},${longitude},${unixTime}`
+        let api_url = `https://api.darksky.net/forecast/2203ea7178a60a841a7d0cead79299db/${latitude},${longitude},${unixTime}`
         let fetch_response = await fetch(api_url);
         let json = await fetch_response.json();//holds json data
         let daily = json.daily.data[0];
@@ -93,7 +94,6 @@ app.get('/weather', async(req, res) =>  {
     };//returned as a response
 
     res.json(lastData);
-    //res.send('what what')
 });
 
 exports.app = functions.https.onRequest(app);
