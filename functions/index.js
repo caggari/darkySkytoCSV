@@ -50,9 +50,8 @@ app.get('/weather', async(req, res) =>  {
     const longitude=req.query.longitude;
     const startDate=req.query.startDate;
     const endDate=req.query.endDate;
-    cosnt darkSkyKeyreq.query.
-    
     const darkSkyKey=req.query.key;
+    
     var end = new Date(endDate);
     
     var start = new Date(startDate);
@@ -63,7 +62,7 @@ app.get('/weather', async(req, res) =>  {
 
     for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
         let unixTime=(Date.parse(d)/1000).toFixed(0);
-        let api_url = `https://api.darksky.net/forecast/${darkSkykey}/${latitude},${longitude},${unixTime}`
+        let api_url = `https://api.darksky.net/forecast/${darkSkyKey}/${latitude},${longitude},${unixTime}`
         let fetch_response = await fetch(api_url);
         let json = await fetch_response.json();//holds json data
         let daily = json.daily.data[0];
