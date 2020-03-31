@@ -171,9 +171,9 @@
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script>
 
-    var metricName   = "Temperature";
-    var metricCount= [];//[1, 3, 1, 2, 1, 1, 1, 1, 2, 2, 3, 1, 2, 1, 4, 3, 2, 1, 1, 1, 1, 1, 4, 2, 1, 2, 8, 2, 1, 4, 2, 4, 1, 3, 1, 2, 1, 1, 3, 1, 1, 5, 1, 1, 4];
-    var metricMonths = [];//["2018-06", "2013-04", "2015-11", "2012-10", "2014-09", "2014-02", "2016-02", "2016-04", "2016-06", "2014-12", "2013-07", "2017-01", "2015-10", "2012-12", "2013-05", "2018-04", "2015-06", "2017-03", "2014-08",
+    //var metricName   = "Temperature";
+    //var metricCount= [];//[1, 3, 1, 2, 1, 1, 1, 1, 2, 2, 3, 1, 2, 1, 4, 3, 2, 1, 1, 1, 1, 1, 4, 2, 1, 2, 8, 2, 1, 4, 2, 4, 1, 3, 1, 2, 1, 1, 3, 1, 1, 5, 1, 1, 4];
+    //var metricMonths = [];//["2018-06", "2013-04", "2015-11", "2012-10", "2014-09", "2014-02", "2016-02", "2016-04", "2016-06", "2014-12", "2013-07", "2017-01", "2015-10", "2012-12", "2013-05", "2018-04", "2015-06", "2017-03", "2014-08",
                         //"2017-07", "2013-02", "2012-07", "2016-03", "2017-06", "2018-07", "2014-10", "2013-01", "2013-10", "2017-11", "2014-05", "2012-11", "2015-01", "2018-03", "2015-12", "2015-08", "2016-08", "2014-11", "2014-01",
                         //"2013-06", "2012-08", "2015-09", "2016-07", "2013-03", "2012-09", "2016-05"];
     var optwidth        = 600;
@@ -200,6 +200,9 @@
 
     async function buttonPressed()
     {
+        var metricName   = "Temperature";
+        var metricCount= [];//[1, 3, 1, 2, 1, 1, 1, 1, 2, 2, 3, 1, 2, 1, 4, 3, 2, 1, 1, 1, 1, 1, 4, 2, 1, 2, 8, 2, 1, 4, 2, 4, 1, 3, 1, 2, 1, 1, 3, 1, 1, 5, 1, 1, 4];
+        var metricMonths = [];
       var location = document.getElementById("location");
       var text = document.getElementById("testText");
       var inpStart = document.getElementById("start").value;
@@ -249,12 +252,12 @@
         return Object.values(item);
         });
 
-        console.log(DataArray);
         for (let i=0; i <DataArray.length; i++)
         {
-            date=DataArray[i][1];
-            let year = date.substring(date.length-4, date.length);
-            let month = date.substring(0, date.indexOf('/'));
+            let curDate=json.dailyList[i].Date;//DataArray[i][1];
+            console.log(curDate);
+            let year = curDate.substring(curDate.length-4, curDate.length);
+            let month = curDate.substring(0, curDate.indexOf('/'));
             let parsedMonth=year+'-'+month;
             metricCount.push(DataArray[i][4]);
             metricMonths.push(parsedMonth);

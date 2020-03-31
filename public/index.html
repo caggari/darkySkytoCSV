@@ -34,7 +34,8 @@
           1) Select a start date<br>
           2) Select an end date<br>
           3) Select a city<br>
-          4) Submit Request
+          4) Enter Key<br>
+          5) Submit Request
         </p>
         <div id = "startDate">
             <label for="start">Start date:</label>
@@ -59,6 +60,12 @@
             <option value="tampa">Tampa</option>
           </select>
         </div>
+        
+        <div id = "keyInput">
+          <label for="">darkSky Key</label>
+
+          <input type="text" id="start" name="trip-start">
+      </div>
         <div>
           <p id = "testText">
             value
@@ -94,6 +101,7 @@
             var text = document.getElementById("testText");
             var inpStart = document.getElementById("start").value;
             var inpEnd = document.getElementById("end").value;
+            var inpKey = document.getElementById("end").value;
             var inpLat;
             var inpLong;
             if (location.value.localeCompare("ohare") == 0)
@@ -129,7 +137,7 @@
 
             //response will store a JSON file
             //const response = await fetch(`weather/${inpLat},${inpLong},${inpStart},${inpEnd}`);
-            const response = await fetch(`/weather?latitude=${inpLat}&longitude=${inpLong}&startDate=${inpStart}&endDate=${inpEnd}`);
+            const response = await fetch(`/weather?latitude=${inpLat}&longitude=${inpLong}&startDate=${inpStart}&endDate=${inpEnd}&key=${inpKey}`);
             const json = await response.json();
             console.log(json);
 
