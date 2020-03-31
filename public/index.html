@@ -53,6 +53,7 @@
         </div>
       -->
         <div>
+          <label>Location: </label>
           <select id = "location">
             <option value="ohare">O'Hare</option>
             <option value="midway">Midway</option>
@@ -61,10 +62,10 @@
           </select>
         </div>
         
-        <div id = "keyInput">
+        <div>
           <label for="">DarkSky Key:</label>
 
-          <input type="text" id="start" name="trip-start">
+          <input type="text" id="keyInput" name="trip-start">
       </div>
         <div>
           <p id = "testText">
@@ -101,7 +102,7 @@
             var text = document.getElementById("testText");
             var inpStart = document.getElementById("start").value;
             var inpEnd = document.getElementById("end").value;
-            var inpKey = document.getElementById("end").value;
+            var inpKey = document.getElementById("keyInput").value;
             var inpLat;
             var inpLong;
             if (location.value.localeCompare("ohare") == 0)
